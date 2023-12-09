@@ -32,7 +32,6 @@ fun main() {
 
     fun part2(input: List<String>): Long {
         val instructions = input.first
-        instructions.length.println()
         val map = buildMap(input)
         val startpoints = map.keys.filter { it.matches(Regex("..A")) }
         return startpoints.map {
