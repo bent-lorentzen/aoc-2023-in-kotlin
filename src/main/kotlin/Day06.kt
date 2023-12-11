@@ -1,18 +1,28 @@
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import kotlin.math.floor
+import kotlin.math.sqrt
 
 fun main() {
 
     fun getValues(input: List<String>, label: String) =
         input.first { it.startsWith(label) }.substringAfter(label).split(Regex(" +")).filterNot { it.isEmpty() }.map { it.toInt() }
 
+    fun solveEquation(distance: Long, time: Long): Pair<Int, Int> {
+        val b = time
+        val a = -1
+        val c = -distance
+        val lowLimit = (-b + sqrt(((b * b) + (-4 * a * c)).toDouble())) / (2 * a)
+        val highLimit = (-b + -sqrt(((b * b) + (-4 * a * c)).toDouble())) / (2 * a)
+        return floor(lowLimit).toInt() to floor(highLimit).toInt()
+    }
+
     fun part1(input: List<String>): Int {
         val times = getValues(input, "Time:")
         val distances = getValues(input, "Distance:")
         return times.mapIndexed { index, time ->
-            (0..time).map {
-                (time - it) * it
-            }.count { it > distances[index] }
+            val lowHigh = solveEquation(distances[index].toLong(), time.toLong())
+            lowHigh.second - lowHigh.first
         }.fold(1) { acc, i ->
             acc * i
         }
@@ -21,9 +31,8 @@ fun main() {
     fun part2(input: List<String>): Int {
         val time = getValues(input, "Time:").joinToString("").toLong()
         val distance = getValues(input, "Distance:").joinToString("").toLong()
-        return (0..time).map {
-            (time - it) * it
-        }.count { it > distance }
+        val lowHigh = solveEquation(distance, time)
+        return lowHigh.second - lowHigh.first
     }
 
     val timer = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()
