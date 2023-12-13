@@ -10,3 +10,7 @@ fun Any?.println() = println(this)
 fun Iterable<Int>.containsAny(set: Iterable<Int>): Boolean {
     return set.any { this.contains(it) }
 }
+
+fun Iterable<Int>.containsAny(range: IntRange): Boolean {
+    return range.any { this.contains(it) }
+}
