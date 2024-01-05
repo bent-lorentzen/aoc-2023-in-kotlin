@@ -11,7 +11,7 @@ fun main() {
         }.sum()
     }
 
-    fun tilNorth(input: List<List<Char>>): List<List<Char>> {
+    fun tiltNorth(input: List<List<Char>>): List<List<Char>> {
         val grid = input.map { it.toMutableList() }
         val availablePositions = MutableList(grid.first.size) { mutableListOf<Int>() }
         grid.forEachIndexed { y, chars ->
@@ -32,11 +32,11 @@ fun main() {
         return grid
     }
 
-    fun tilSouth(input: List<List<Char>>): List<List<Char>> {
-        return tilNorth(input.reversed()).reversed()
+    fun tiltSouth(input: List<List<Char>>): List<List<Char>> {
+        return tiltNorth(input.reversed()).reversed()
     }
 
-    fun tilWest(input: List<List<Char>>): List<List<Char>> {
+    fun tiltWest(input: List<List<Char>>): List<List<Char>> {
         val grid = input.map { it.toMutableList() }
         val availablePositions = MutableList(grid.size) { mutableListOf<Int>() }
         grid.forEachIndexed { y, chars ->
@@ -57,17 +57,17 @@ fun main() {
         return grid
     }
 
-    fun tilEast(input: List<List<Char>>): List<List<Char>> {
-        return tilWest(input.map { it.reversed() }).map { it.reversed() }
+    fun tiltEast(input: List<List<Char>>): List<List<Char>> {
+        return tiltWest(input.map { it.reversed() }).map { it.reversed() }
     }
 
     fun cycle(grid: List<List<Char>>): List<List<Char>> {
-        return tilEast(tilSouth(tilWest(tilNorth(grid))))
+        return tiltEast(tiltSouth(tiltWest(tiltNorth(grid))))
     }
 
     fun part1(input: List<String>): Int {
         val grid = input.map { it.toList() }
-        return calculateWeight(tilNorth(grid))
+        return calculateWeight(tiltNorth(grid))
     }
 
     fun cycleUntilRepetition(grid: List<List<Char>>): MutableList<List<List<Char>>> {
