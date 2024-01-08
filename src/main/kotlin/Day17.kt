@@ -17,7 +17,7 @@ fun main() {
     fun getMap(lines: List<List<Int>>): Map<Pair<Int, Int>, CityBlock> {
         return lines.mapIndexed { y, ints ->
             ints.mapIndexed { x, i ->
-                CityBlock(x to y, i)
+                CityBlock(y to x, i)
             }
         }.flatten().associateBy { it.id }
     }
